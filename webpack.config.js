@@ -12,7 +12,7 @@ const sassEntry = (entry) => ({
   },
   devtool: isProduction ? false : 'inline-source-map',
   resolveLoader: {
-    modules: [path.resolve(__dirname, 'node_modules')],
+    modules: ['node_modules', path.resolve(__dirname, 'node_modules')],
   },
   module: {
     rules: [
