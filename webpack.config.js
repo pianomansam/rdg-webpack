@@ -11,6 +11,9 @@ const sassEntry = (entry) => ({
     path: path.dirname(entry).replace('src', 'dist'),
   },
   devtool: isProduction ? false : 'inline-source-map',
+  resolveLoader: {
+    modules: [path.resolve(__dirname, 'node_modules')],
+  },
   module: {
     rules: [
       {
