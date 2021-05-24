@@ -1,9 +1,12 @@
+const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 
 const isProduction = process.env.NODE_ENV !== 'development';
+
+const rdgWebpackLocation = path.resolve(__dirname, 'node_modules');
 
 const sassEntry = (entry) => ({
   entry,
@@ -12,7 +15,7 @@ const sassEntry = (entry) => ({
   },
   devtool: isProduction ? false : 'inline-source-map',
   resolveLoader: {
-    modules: ['node_modules', path.resolve(__dirname, 'node_modules')],
+    modules: ['node_modules', rdgWebpackLocation],
   },
   module: {
     rules: [
@@ -99,6 +102,9 @@ const jsEntry = (entry) => ({
     path: path.dirname(entry).replace('src', 'dist'),
   },
   devtool: isProduction ? false : 'inline-source-map',
+  resolveLoader: {
+    modules: ['node_modules', rdgWebpackLocation],
+  },
   module: {
     rules: [
       {
@@ -142,10 +148,19 @@ module.exports = () => {
 
   const moduleJsExports = moduleJsFiles.map(jsEntry);
 
+  let localConfig;
+
+  // Import local webpack config, if it exists.
+  if (fs.existsSync('./webpack.config.js')) {
+    localConfigFile = require('./webpack.config.js');
+    localConfig = localConfigFile instanceof Array ? localConfigFile : [localConfigFile];
+  }
+
   return [
     ...themeSassExports,
     ...moduleSassExports,
     ...themeJsExports,
     ...moduleJsExports,
+    ...(localConfig ? localConfig : []),
   ];
 };
