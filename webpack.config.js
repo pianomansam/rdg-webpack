@@ -156,7 +156,6 @@ module.exports = () => {
     localConfigFile = require(process.cwd() + '/webpack.config.js');
     console.log('localConfigFile', localConfigFile);
     localConfig = localConfigFile instanceof Array ? localConfigFile : [localConfigFile];
-    console.log('localConfig', localConfig);
   }
 
   return [
