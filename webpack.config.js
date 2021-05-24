@@ -153,7 +153,7 @@ module.exports = () => {
   // Import local webpack config, if it exists.
   if (fs.existsSync(process.cwd() + '/webpack.config.js')) {
     console.log('loading local webpack config');
-    localConfigFile = require(process.cwd() + '/webpack.config.js'));
+    localConfigFile = require(process.cwd() + '/webpack.config.js');
     console.log('localConfigFile', localConfigFile);
     localConfig = localConfigFile instanceof Array ? localConfigFile : [localConfigFile];
     console.log('localConfig', localConfig);
