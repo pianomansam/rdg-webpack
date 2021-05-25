@@ -2,11 +2,11 @@ const path = require('path');
 
 const isProduction = process.env.NODE_ENV !== 'development';
 
-const reactEntry = (entryPath) => ({
-  entry: path.resolve(process.cwd(), `${entryPath}/src/index.js`),
+const reactEntry = (entry) => ({
+  entry,
   output: {
-    filename: 'main.js',
-    path: path.resolve(process.cwd(), `${entryPath}/dist`),
+    filename: path.basename(entry),
+    path: path.dirname(entry).replace('src', 'dist'),
   },
   devtool: isProduction ? false : 'inline-source-map',
   module: {
