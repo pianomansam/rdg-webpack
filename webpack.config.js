@@ -90,7 +90,7 @@ const sassEntry = (entry) => ({
       filename: path.basename(entry).replace('scss', 'css'),
     }),
     ...(entry.search('/themes/') > -1 && entry.search('/styles.scss')
-      ? [new LiveReloadPlugin()]
+      ? [new LiveReloadPlugin({ useSourceSize: true })]
       : []),
   ],
 });
