@@ -3,6 +3,7 @@ const path = require('path');
 const glob = require('glob');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV !== 'development';
 
@@ -55,38 +56,18 @@ const sassEntry = (entry) => ({
       },
       {
         test: /\.(ttf|eot|woff|woff2)$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'fonts/',
-          },
-        },
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name][ext]'
+        }
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'images/',
-            },
-          },
-          // {
-          //   loader: 'image-webpack-loader',
-          //   options: {
-          //     // disable: !isProduction,
-          //     mozjpeg: {
-          //       enabled: false,
-          //     },
-          //     webp: {
-          //       enabled: true,
-          //     }
-          //   },
-          // },
-        ],
-      },
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name][ext]'
+        }
+      }
     ],
   },
   plugins: [
@@ -96,6 +77,17 @@ const sassEntry = (entry) => ({
     ...(entry.search('/themes/') > -1 && entry.search('/styles.scss')
       ? [new LiveReloadPlugin({ useSourceSize: true })]
       : []),
+    new ImageMinimizerPlugin({
+      minimizerOptions: {
+        // Lossless optimization with custom option
+        // Feel free to experiment with options for better result for you
+        plugins: [
+          ["gifsicle", { interlaced: true }],
+          ["jpegtran", { progressive: true }],
+          ["optipng", { optimizationLevel: 5 }],
+        ],
+      },
+    }),
   ],
 });
 
