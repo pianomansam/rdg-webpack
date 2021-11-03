@@ -54,8 +54,7 @@ const sassEntry = (entry) => ({
         ],
       },
       {
-        test: /\.(ttf|eot|woff|woff2|svg)$/,
-        exclude: `${path.dirname(entry)}/images`,
+        test: /\.(ttf|eot|woff|woff2)$/,
         use: {
           loader: 'file-loader',
           options: {
@@ -66,7 +65,6 @@ const sassEntry = (entry) => ({
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
-        include: `${path.dirname(entry)}/images`,
         use: [
           {
             loader: 'file-loader',
@@ -154,13 +152,13 @@ module.exports = () => {
 
   let localConfig;
 
-  // Import local webpack config, if it exists.
-  if (fs.existsSync(process.cwd() + '/webpack.config.js')) {
-    console.log('loading local webpack config');
-    localConfigFile = require(process.cwd() + '/webpack.config.js');
-    console.log('localConfigFile', localConfigFile);
-    localConfig = localConfigFile instanceof Array ? localConfigFile : [localConfigFile];
-  }
+  // // Import local webpack config, if it exists.
+  // if (fs.existsSync(process.cwd() + '/webpack.config.js')) {
+  //   console.log('loading local webpack config');
+  //   localConfigFile = require(process.cwd() + '/webpack.config.js');
+  //   console.log('localConfigFile', localConfigFile);
+  //   localConfig = localConfigFile instanceof Array ? localConfigFile : [localConfigFile];
+  // }
 
   return [
     ...themeSassExports,
