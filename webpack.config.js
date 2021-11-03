@@ -76,7 +76,13 @@ const sassEntry = (entry) => ({
           // {
           //   loader: 'image-webpack-loader',
           //   options: {
-          //     disable: !isProduction,
+          //     // disable: !isProduction,
+          //     mozjpeg: {
+          //       enabled: false,
+          //     },
+          //     webp: {
+          //       enabled: true,
+          //     }
           //   },
           // },
         ],
