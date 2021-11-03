@@ -17,7 +17,6 @@
     "css-loader": "^6.5.0",
     "file-loader": "^6.2.0",
     "glob": "^7.1.7",
-    "image-webpack-loader": "^8.0.0",
     "mini-css-extract-plugin": "^2.4.0",
     "postcss": "^8.2.15",
     "postcss-loader": "^6.2.0",
