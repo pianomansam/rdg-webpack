@@ -9,10 +9,15 @@ const isProduction = process.env.NODE_ENV !== 'development';
 
 const rdgWebpackLocation = path.resolve(__dirname, 'node_modules');
 
+const replaceLast = (text, searchValue, replaceValue) => {
+  const lastOccurrenceIndex = text.lastIndexOf(searchValue);
+  return text.slice(0, lastOccurrenceIndex) + replaceValue + text.slice(lastOccurrenceIndex + searchValue.length);
+}
+
 const sassEntry = (entry) => ({
   entry,
   output: {
-    path: path.dirname(entry).replace('src', 'dist'),
+    path: replaceLast(path.dirname(entry), 'src', 'dist'),
   },
   devtool: isProduction ? false : 'inline-source-map',
   resolveLoader: {
@@ -121,7 +126,7 @@ const jsEntry = (entry) => ({
   entry,
   output: {
     filename: path.basename(entry),
-    path: path.dirname(entry).replace('src', 'dist'),
+    path: replaceLast(path.dirname(entry), 'src', 'dist'),
   },
   devtool: isProduction ? false : 'inline-source-map',
   resolveLoader: {
